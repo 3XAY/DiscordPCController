@@ -124,5 +124,21 @@ async def enter(ctx):
 	if(sendScreen == "True"):
 		await screen(ctx)
 
+@bot.command()
+async def shutdown(ctx):
+	if(int(ctx.author.id) != int(ID)):
+		await ctx.send("Unauthorized")
+	else:
+		input = ctx.message.content
+		input = input.removeprefix(".shutdown ")
+
+		if(input == "CONFIRM SHUTDOWN"):
+			await ctx.send("Shutting down...")
+			run(["powershell", "shutdown /s /t 0"], shell=True)
+		else:
+			await ctx.send("Are you sure you want to **SHUTDOWN** your computer?")
+			await ctx.send("This will turn the computer AND the bot (me) fully off as well as any running programs.")
+			await ctx.send("Type `.shutdown CONFIRM SHUTDOWN` to confirm")
+
 
 bot.run(token, log_handler=handler, log_level=DEBUG)
