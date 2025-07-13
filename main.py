@@ -8,6 +8,7 @@ import pyautogui
 load_dotenv()
 token = os.getenv("DISCORD_TOKEN")
 ID = os.getenv("DISCORD_ID")
+sendScreen = os.getenv("SEND_SCREENSHOT")
 
 handler = logging.FileHandler(filename="discord.log", encoding="utf-8", mode="w")
 intents = discord.Intents.default()
@@ -41,6 +42,8 @@ async def type(ctx):
 	else:
 		pyautogui.write(type)
 		await ctx.send(f"`{type}` was typed")
+		if(sendScreen == "True"):
+			await screen(ctx)
 
 @bot.command()
 async def mouse(ctx):
@@ -54,6 +57,14 @@ async def mouse(ctx):
 	else:
 		pyautogui.moveRel(int(x), -int(y))
 		await ctx.send("Mouse has been moved")
+		if(sendScreen == "True"):
+			await screen(ctx)
+
+@bot.command()
+async def screen(ctx):
+	pyautogui.screenshot('PCCONTROLLERSCREENSHOTTEMPFILE.png')
+	await ctx.send("", file=discord.File("PCCONTROLLERSCREENSHOTTEMPFILE.png"))
+	os.remove("PCCONTROLLERSCREENSHOTTEMPFILE.png")
 
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
