@@ -32,9 +32,6 @@ async def on_message(message):
 		return
 	await bot.process_commands(message)
 
-@bot.command()
-async def repeat(ctx):
-	await ctx.send(ctx.message.content)
 
 @bot.command()
 async def type(ctx):
@@ -85,17 +82,20 @@ async def right(ctx):
 
 @bot.command()
 async def cmd(ctx):
-	command = ctx.message.content
-	command = command.removeprefix(".cmd ")
-	if(command == ".cmd"):
-		await ctx.send("No command provided, no commands sent")
+	if(int(ctx.author.id) != int(ID)):
+		await ctx.send("Unauthorized")
 	else:
-		await ctx.send(f"Running the command `{command}`, it may take some time to finish...")
-		result = run(["powershell", command], shell=True, capture_output=True, text=True, check=True)
-		await ctx.send(result.stdout)
-		await ctx.send(result.stderr)
-		if(sendScreen == "True"):
-			await screen(ctx)
+		command = ctx.message.content
+		command = command.removeprefix(".cmd ")
+		if(command == ".cmd"):
+			await ctx.send("No command provided, no commands sent")
+		else:
+			await ctx.send(f"Running the command `{command}`, it may take some time to finish...")
+			result = run(["powershell", command], shell=True, capture_output=True, text=True, check=True)
+			await ctx.send(result.stdout)
+			await ctx.send(result.stderr)
+			if(sendScreen == "True"):
+				await screen(ctx)
 
 @bot.command()
 async def url(ctx):
