@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 import os
 import pyautogui
 from subprocess import run
+import webbrowser
+import time
 
 load_dotenv()
 token = os.getenv("DISCORD_TOKEN")
@@ -92,8 +94,21 @@ async def cmd(ctx):
 		result = run(["powershell", command], shell=True, capture_output=True, text=True, check=True)
 		await ctx.send(result.stdout)
 		await ctx.send(result.stderr)
-	if(sendScreen == "True"):
-		await screen(ctx)
+		if(sendScreen == "True"):
+			await screen(ctx)
+
+@bot.command()
+async def url(ctx):
+	website = ctx.message.content
+	website = website.removeprefix(".url ")
+	if(website == ".url"):
+		await ctx.send("No URL provided, nothing was opened")
+	else:
+		webbrowser.open_new(website)
+		await ctx.send(f"Opened `{website}` on the default browser")
+		time.sleep(1.5)
+		if(sendScreen == "True"):
+			await screen(ctx)
 
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
