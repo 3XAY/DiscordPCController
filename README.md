@@ -5,7 +5,7 @@ Bot that lets you control your computer via messages on Discord.
 ## Dependencies:
 - `discord.py`
 - `python-dotenv`
-- `keyboard`
+- `pyautogui`
 
 ## Available Commands:
 - .type <insert string here> (Types the input message on the server)

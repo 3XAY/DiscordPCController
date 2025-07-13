@@ -3,8 +3,7 @@ from discord.ext import commands
 import logging
 from dotenv import load_dotenv
 import os
-import time
-import keyboard
+import pyautogui
 
 load_dotenv()
 token = os.getenv("DISCORD_TOKEN")
@@ -40,7 +39,21 @@ async def type(ctx):
 	if(type == ".type"):
 		await ctx.send("No input text provided, keypresses not sent")
 	else:
-		keyboard.write(type)
+		pyautogui.write(type)
 		await ctx.send(f"`{type}` was typed")
+
+@bot.command()
+async def mouse(ctx):
+	coords = ctx.message.content
+	coords = coords.removeprefix(".mouse ")
+	coordsSplit = coords.split()
+	x = coordsSplit[0]
+	y = coordsSplit[1]
+	if(coords == ".mouse"):
+		await ctx.send("No movements provided, mouse movements not sent")
+	else:
+		pyautogui.moveRel(int(x), -int(y))
+		await ctx.send("Mouse has been moved")
+
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
