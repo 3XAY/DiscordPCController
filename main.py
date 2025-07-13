@@ -66,5 +66,19 @@ async def screen(ctx):
 	await ctx.send("", file=discord.File("PCCONTROLLERSCREENSHOTTEMPFILE.png"))
 	os.remove("PCCONTROLLERSCREENSHOTTEMPFILE.png")
 
+@bot.command()
+async def left(ctx):
+	pyautogui.click()
+	await ctx.send("Left click pressed")
+	if(sendScreen == "True"):
+		await screen(ctx)
+
+@bot.command()
+async def right(ctx):
+	pyautogui.rightClick()
+	await ctx.send("Right click pressed")
+	if(sendScreen == "True"):
+		await screen(ctx)
+
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
