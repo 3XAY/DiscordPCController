@@ -19,3 +19,6 @@ Bot that lets you control your computer via messages on Discord.
 - .url <insert url here> (Opens the URL in the default browser)
 - .win (Presses the Windows key)
 - .enter (Presses enter)
+
+
+CAUTION: USE AT YOUR OWN RISK, WHOEVER HAS ACCESS TO THIS BOT HAS ACCESS TO YOUR COMPUTER, I AM NOT RESPONSIBLE FOR ANY DAMAGES CAUSED BY THIS BOT
