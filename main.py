@@ -4,6 +4,7 @@ import logging
 from dotenv import load_dotenv
 import os
 import pyautogui
+from subprocess import run
 
 load_dotenv()
 token = os.getenv("DISCORD_TOKEN")
@@ -77,6 +78,18 @@ async def left(ctx):
 async def right(ctx):
 	pyautogui.rightClick()
 	await ctx.send("Right click pressed")
+	if(sendScreen == "True"):
+		await screen(ctx)
+
+@bot.command()
+async def cmd(ctx):
+	command = ctx.message.content
+	command = command.removeprefix(".cmd ")
+	if(command == ".cmd"):
+		await ctx.send("No command provided, no commands sent")
+	else:
+		await ctx.send(f"Running the command `{command}`, it may take some time to finish...")
+		run(["powershell", command], shell=True)
 	if(sendScreen == "True"):
 		await screen(ctx)
 
