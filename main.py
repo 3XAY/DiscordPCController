@@ -1,20 +1,20 @@
-import discord
+from discord import Intents, File
 from discord.ext import commands
-import logging
+from logging import FileHandler, DEBUG 
 from dotenv import load_dotenv
-import os
-import pyautogui
+from os import getenv, remove
+from pyautogui import write, moveRel, screenshot, press, click, rightClick
 from subprocess import run
-import webbrowser
-import time
+from webbrowser import open_new
+from time import sleep
 
 load_dotenv()
-token = os.getenv("DISCORD_TOKEN")
-ID = os.getenv("DISCORD_ID")
-sendScreen = os.getenv("SEND_SCREENSHOT")
+token = getenv("DISCORD_TOKEN")
+ID = getenv("DISCORD_ID")
+sendScreen = getenv("SEND_SCREENSHOT")
 
-handler = logging.FileHandler(filename="discord.log", encoding="utf-8", mode="w")
-intents = discord.Intents.default()
+handler = FileHandler(filename="discord.log", encoding="utf-8", mode="w")
+intents = Intents.default()
 intents.message_content = True
 intents.members = True
 
@@ -43,7 +43,7 @@ async def type(ctx):
 	if(type == ".type"):
 		await ctx.send("No input text provided, keypresses not sent")
 	else:
-		pyautogui.write(type)
+		write(type)
 		await ctx.send(f"`{type}` was typed")
 		if(sendScreen == "True"):
 			await screen(ctx)
@@ -58,27 +58,27 @@ async def mouse(ctx):
 	if(coords == ".mouse"):
 		await ctx.send("No movements provided, mouse movements not sent")
 	else:
-		pyautogui.moveRel(int(x), -int(y))
+		moveRel(int(x), -int(y))
 		await ctx.send("Mouse has been moved")
 		if(sendScreen == "True"):
 			await screen(ctx)
 
 @bot.command()
 async def screen(ctx):
-	pyautogui.screenshot('PCCONTROLLERSCREENSHOTTEMPFILE.png')
-	await ctx.send("", file=discord.File("PCCONTROLLERSCREENSHOTTEMPFILE.png"))
-	os.remove("PCCONTROLLERSCREENSHOTTEMPFILE.png")
+	screenshot('PCCONTROLLERSCREENSHOTTEMPFILE.png')
+	await ctx.send("", file=File("PCCONTROLLERSCREENSHOTTEMPFILE.png"))
+	remove("PCCONTROLLERSCREENSHOTTEMPFILE.png")
 
 @bot.command()
 async def left(ctx):
-	pyautogui.click()
+	click()
 	await ctx.send("Left click pressed")
 	if(sendScreen == "True"):
 		await screen(ctx)
 
 @bot.command()
 async def right(ctx):
-	pyautogui.rightClick()
+	rightClick()
 	await ctx.send("Right click pressed")
 	if(sendScreen == "True"):
 		await screen(ctx)
@@ -104,25 +104,25 @@ async def url(ctx):
 	if(website == ".url"):
 		await ctx.send("No URL provided, nothing was opened")
 	else:
-		webbrowser.open_new(website)
+		open_new(website)
 		await ctx.send(f"Opened `{website}` on the default browser")
-		time.sleep(1.5)
+		sleep(1.5)
 		if(sendScreen == "True"):
 			await screen(ctx)
 
 @bot.command()
 async def win(ctx):
-	pyautogui.press("win")
+	press("win")
 	await ctx.send("Windows key pressed")
 	if(sendScreen == "True"):
 		await screen(ctx)
 
 @bot.command()
 async def enter(ctx):
-	pyautogui.press("enter")
+	press("enter")
 	await ctx.send("Enter key pressed")
 	if(sendScreen == "True"):
 		await screen(ctx)
 
 
-bot.run(token, log_handler=handler, log_level=logging.DEBUG)
+bot.run(token, log_handler=handler, log_level=DEBUG)
