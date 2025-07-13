@@ -110,5 +110,19 @@ async def url(ctx):
 		if(sendScreen == "True"):
 			await screen(ctx)
 
+@bot.command()
+async def win(ctx):
+	pyautogui.press("win")
+	await ctx.send("Windows key pressed")
+	if(sendScreen == "True"):
+		await screen(ctx)
+
+@bot.command()
+async def enter(ctx):
+	pyautogui.press("enter")
+	await ctx.send("Enter key pressed")
+	if(sendScreen == "True"):
+		await screen(ctx)
+
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
