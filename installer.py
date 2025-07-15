@@ -10,6 +10,18 @@ What does the code need?
 	Error handling - PC Utilities Installer framework
 """
 from webbrowser import open_new
+from subprocess import run
+from os import path, getcwd
+
+def installStep(message, command, error):
+	print(message)
+	try:
+		run(["powershell", command], shell=False, check=True)
+		print("DONE")
+	except:
+		print(error + "\nEnter any key to exit...")
+		blank = input()
+		exit(error)
 
 print("Open Discord and head to the settings (Enter to continue)")
 input()
@@ -68,3 +80,22 @@ print("Add the following permissions:")
 print("Attach files, embed links, manage messages, read message history, send messages, use slash commands (Enter to continue)")
 input()
 print("Please wait while the installer wraps everything up")
+
+if(path.exists('Discord PC Controller')):
+	installStep("", "rm Discord PC Controller -r -force", "ERROR: Please make sure Discord PC Controller isn't installed")
+
+installStep("Downloading app...", "curl https://github.com/3XAY/DiscordPCController/releases/latest/download/Discord.PC.Controller.zip -o Discord-PC-Controller.zip", "ERROR: Unable to download app")
+installStep("Unpacking app...", "Expand-Archive -Force Discord-PC-Controller.zip Discord-PC-Controller/", "ERROR: Unable to extract app")
+if(screen == "N"):
+	screen = '"False"'
+else:
+	screen = '"True"'
+installStep("Creating .env file", f"'DISCORD_TOKEN={token}\nDISCORD_ID={ID}\nSEND_SCREENSHOT={screen}' >> 'Discord-PC-Controller/Discord PC Controller/_internal/.env'", "ERROR: Unable to save .env file")
+installStep("Cleaning things up...", 'Remove-Item -Path Discord-PC-Controller.zip -Force', "ERROR: Unable to clean up installation files")
+
+currDir = getcwd()
+installStep("", '$shell = New-Object -ComObject WScript.Shell\n$shortcut = $shell.CreateShortcut("Run Discord Bot.lnk")\n$shortcut.TargetPath = "' + currDir + '\Discord-PC-Controller\Discord PC Controller\Discord PC Controller.exe"\n$shortcut.Save()', "ERROR: Unable to create shortcut")
+print("Installer completed, press enter to start the bot")
+input()
+input()
+installStep("Starting bot...", 'Invoke-Item "Run Discord Bot.lnk"', "ERROR: Unable to run bot")
