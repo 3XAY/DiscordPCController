@@ -12,6 +12,7 @@ What does the code need?
 from webbrowser import open_new
 from subprocess import run
 from os import path, getcwd
+from time import sleep
 
 def installStep(message, command, error):
 	print(message)
@@ -40,9 +41,6 @@ screen = input().upper()
 print("A new tab will be opened on your computer, sign in to your Discord account (Enter to continue)")
 input()
 open_new("https://discord.com/developers/")
-print("After signing in, close the tab and press enter to continue to the next page")
-input()
-open_new("https://discord.com/developers/applications")
 print("Click on 'New Application' in the top left of the screen (Enter to continue)")
 input()
 print("Name the bot whatever you want and check the checkbox (Enter to continue)")
@@ -90,12 +88,18 @@ if(screen == "N"):
 	screen = '"False"'
 else:
 	screen = '"True"'
-installStep("Creating .env file", f"'DISCORD_TOKEN={token}\nDISCORD_ID={ID}\nSEND_SCREENSHOT={screen}' >> 'Discord-PC-Controller/Discord PC Controller/_internal/.env'", "ERROR: Unable to save .env file")
+installStep("", "$PSDefaultParameterValues['Out-File:Encoding'] = 'utf8'" ,"")
+print("Creating .env file")
+with open("Discord-PC-Controller\Discord PC Controller\.env", "w") as f:
+	f.write(f"DISCORD_TOKEN={token}\n")
+	f.write(f"DISCORD_ID={ID}\n")
+	f.write(f"SEND_SCREENSHOT={screen}")
 installStep("Cleaning things up...", 'Remove-Item -Path Discord-PC-Controller.zip -Force', "ERROR: Unable to clean up installation files")
 
 currDir = getcwd()
-installStep("", '$shell = New-Object -ComObject WScript.Shell\n$shortcut = $shell.CreateShortcut("Run Discord Bot.lnk")\n$shortcut.TargetPath = "' + currDir + '\Discord-PC-Controller\Discord PC Controller\Discord PC Controller.exe"\n$shortcut.Save()', "ERROR: Unable to create shortcut")
-print("Installer completed, press enter to start the bot")
-input()
-input()
-installStep("Starting bot...", 'Invoke-Item "Run Discord Bot.lnk"', "ERROR: Unable to run bot")
+print("Installer completed")
+print("Navigate to the newly created 'Discord-PC-Controller' folder next to the 'InstallBot.exe' file")
+print("Enter the 'Discord PC Controller' folder and run the exe file inside to start the bot")
+print("Automatically closing in 20 seconds...")
+sleep(20)
+exit()

@@ -6,7 +6,7 @@ Just install the bot and you're good to go. You can even add this bot to a serve
 ## Installation instructions:
 1. Download [InstallBot.exe](https://github.com/3XAY/DiscordPCController/releases/latest/download/InstallBot.exe)
 2. Run the installer and follow all of the instructions
-3. Enjoy the bot! (Run the "Run Discord Bot" shortcut if you need to run the bot again)
+3. Enjoy the bot! (Run the Discord PC Controller.exe file if you need to run it again)
 
 
 ## Dependencies:
