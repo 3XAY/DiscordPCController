@@ -37,6 +37,18 @@ async def on_ready():
 	print(f"{bot.user.name} is ready")
 	user = await bot.fetch_user(ID)
 	await user.send(f"{bot.user.name} is ready")
+	await user.send("Here are all of the available commands:\n"
+	+ "`.type <insert text here>` - Types what you want on the computer\n"
+	+ "`.mouse <x> <y>` - Moves the cursor, 1 value = 1 pixel, x and y are separated by a space\n"
+	+ "`.left` - Presses the left mouse button\n"
+	+ "`.right` - Presses the right mouse button\n"
+	+ "`.screen` - Sends a screenshot of the screen\n"
+	+ "`.cmd <insert command here>` - Runs any command in Windows PowerShell, only the owner (you) have access\n"
+	+ "`.url <insert url here>` - Opens the URL in the browser (make sure to add https:// if you want it to open in the default browser)\n"
+	+ "`.win` - Presses the Windows key\n"
+	+ "`.enter` - Presses the enter key\n"
+	+ "`.shutdown` - Shuts the entire computer down, only the owner (you) have access\n"
+	+ "`.k` - Instantly kills the bot, use this if you want to disable the bot (will be re-enabled when you run the bot again)")
 
 #Checks every message to see if it is a command, if so, it gets handled accordingly
 #Ignores its own output
