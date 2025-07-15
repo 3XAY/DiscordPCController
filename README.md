@@ -3,6 +3,10 @@ If you've ever needed to do something small on your computer while you're away, 
 It's a lot lighter than a remote access solution and doesn't require anything to be installed on the client side.
 Just install the bot and you're good to go. You can even add this bot to a server with **PEOPLE YOU TRUST** and watch the chaos ensue, just like when streamers let chat control their computer.
 
+## Installation instructions:
+1. Download [InstallBot.exe](https://github.com/3XAY/DiscordPCController/releases/latest/download/InstallBot.exe)
+2. Run the installer and follow all of the instructions
+3. Enjoy the bot! (Run the "Run Discord Bot" shortcut if you need to run the bot again)
 
 
 ## Dependencies:
